@@ -1,4 +1,7 @@
 function setup() {
-    createCanvas(600, 600);
-    initSquares();
+    createCanvas(1500, 800);
+  }
+  function draw(){
+    background('#222222');
+    
   }
