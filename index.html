@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>quoriddor</title>
 </head>
+
 <body>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script>
+        class TheSquare {
+            #x;
+            #y;
+            #color;
+            constructor(x, y, color) {
+                this.#color = color;
+                this.#x = x;
+                this.#y = y;
+            }
+            draw() {
+                fill(this.#color);
+                rect(this.#x, this.#y, 50, 30);
+            }
+        }
+
+        function createMatrix(numRows, numCols, squareSize, startX, startY, color,distance) {
+            const matrix = [];
+            
+            for (let i = 0; i < numRows; i++) {
+                const row = [];
+                for (let j = 0; j < numCols; j++) {
+                    const x = startX + j * squareSize+j*distance;
+                    const y = startY + i * squareSize-i*distance;
+                    const square = new TheSquare(x, y, color);
+                    row.push(square);
+                }
+                matrix.push(row);
+            }
+            return matrix;
+        }
+
+        let matrix = [];
+
+        function setup() {
+            createCanvas(1500, 800);
+            matrix = createMatrix(9, 9, 45, 50, 50, "red",10);
+        }
+
+        function draw() {
+            background('#222222');
+            matrix.forEach(row => {
+                row.forEach(square => {
+                    square.draw();
+                });
+            });
+        }
+    </script>
 </body>
+
 </html>
