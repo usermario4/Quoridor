@@ -22,18 +22,18 @@
             }
             draw() {
                 fill(this.#color);
-                rect(this.#x, this.#y, 50, 30);
+                rect(this.#x, this.#y, 60, 50,5);
             }
         }
 
-        function createMatrix(numRows, numCols, squareSize, startX, startY, color,distance) {
+        function createMatrix(Rows, numCols, squareSize, startX, startY, color, distance) {
             const matrix = [];
-            
-            for (let i = 0; i < numRows; i++) {
+
+            for (let i = 0; i < Rows; i++) {
                 const row = [];
                 for (let j = 0; j < numCols; j++) {
-                    const x = startX + j * squareSize+j*distance;
-                    const y = startY + i * squareSize-i*distance;
+                    const x = startX + j * squareSize + j * distance;
+                    const y = startY + i * squareSize - i * distance;
                     const square = new TheSquare(x, y, color);
                     row.push(square);
                 }
@@ -46,7 +46,7 @@
 
         function setup() {
             createCanvas(1500, 800);
-            matrix = createMatrix(9, 9, 45, 50, 50, "red",10);
+            matrix = createMatrix(9, 9, 65, 450, 125, "#e2bc74", 5);
         }
 
         function draw() {
