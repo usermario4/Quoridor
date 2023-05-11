@@ -8,9 +8,51 @@
     <title>quoriddor</title>
 </head>
 
+
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+
+    <label for="player1">Player 1:</label>
+    <input type="text" id="player1" name="player1"><br>
+    <label for="player2">Player 2:</label>
+    <input type="text" id="player2" name="player2"><br>
+    <button type="button" class="my-btn" onclick="startGame()">PLAY!</button>
+
+
+
+    <style>
+        .my-btn {
+            background-color: rgb(62, 137, 0);
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 5px 15px;
+            min-height: 50px;
+            min-width: 120px;
+            position: relative;
+
+        }
+
+        .my-btn:hover {
+            background-color: rgb(255, 0, 0);
+            transition: 0.7s;
+        }
+    </style>
+
     <script>
+        let player1Name;
+        let player2Name;
+
+        function startGame() {
+            player1Name = document.getElementById("player1").value;
+            player2Name = document.getElementById("player2").value;
+            console.log("Player 1: " + player1Name);
+            console.log("Player 2: " + player2Name);
+        }
+
         class TheSquare {
             #x;
             #y;
@@ -24,17 +66,41 @@
                 fill(this.#color);
                 rect(this.#x, this.#y, 60, 50, 5);
             }
+            setColor(color) {
+                this.#color = color;
+            }
+        }
+
+        class theFrame {
+            #x;
+            #y;
+            #color;
+            constructor(x, y, color) {
+                this.#color = color;
+                this.#x = x;
+                this.#y = y;
+            }
+            draw() {
+                fill(this.#color);
+                rect(this.#x, this.#y, 90, 45, 10);
+            }
+            setColor(color) {
+                this.#color = color;
+            }
         }
 
         function createMatrix(Rows, numCols, squareSize, startX, startY, color, distance) {
             const matrix = [];
-
             for (let i = 0; i < Rows; i++) {
                 const row = [];
                 for (let j = 0; j < numCols; j++) {
                     const x = startX + j * squareSize + j * distance;
                     const y = startY + i * squareSize - i * distance;
                     const square = new TheSquare(x, y, color);
+                    //if (i < Rows && (j === 0 || j === numCols - 1)) {
+                    //    square.setColor("#FF0000");
+                    //   }
+
                     row.push(square);
                 }
                 matrix.push(row);
@@ -42,23 +108,75 @@
             return matrix;
         }
 
+        function createFrame(rows, numCols, frameSize, startX, startY, color, distance) {
+            const matrix1 = [];
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < numCols; j++) {
+                    const x = startX + j * frameSize - j * distance;
+                    const y = startY + i * frameSize + i * distance;
+
+
+                    const frame = new theFrame(x, y, color);
+                    row.push(frame);
+                }
+                matrix1.push(row);
+            }
+            return matrix1;
+        }
+        function createFrame(rows, numCols, frameSize, startX, startY, color, distance) {
+            const matrix2 = [];
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < numCols; j++) {
+                    const x = startX + j * frameSize - j * distance;
+                    const y = startY + i * frameSize + i * distance;
+
+
+                    const frame = new theFrame(x, y, color);
+                    row.push(frame);
+                }
+                matrix2.push(row);
+            }
+            return matrix2;
+        }
+
         let matrix = [];
+        let matrix1 = [];
+        let matrix2 = [];
 
         function setup() {
-            createCanvas(1500, 800);
+            const canvas = createCanvas(1250, 800);
             matrix = createMatrix(9, 9, 65, 450, 125, "#e2bc74", 5);
+            matrix1 = createFrame(11, 1, 50, 350, 105, "#7e5835", 2);
+            matrix2 = createFrame(11, 1, 50, 1075, 105, "#7e5835", 2);
         }
 
         function draw() {
-  background('#222222');
-  for (let i = 0; i < matrix.length; i++) {
-    const row = matrix[i];
-    for (let j = 0; j < row.length; j++) {
-      const square = row[j];
-      square.draw();
-    }
-  }
-}
+            background("#222222");
+            for (let i = 0; i < matrix.length; i++) {
+                const row = matrix[i];
+                for (let j = 0; j < row.length; j++) {
+                    const square = row[j];
+                    square.draw();
+                }
+            }
+            for (let i = 0; i < matrix1.length; i++) {
+                const row = matrix1[i];
+                for (let j = 0; j < row.length; j++) {
+                    const frame = row[j];
+                    frame.draw();
+                }
+            }
+            for (let i = 0; i < matrix2.length; i++) {
+                const row = matrix2[i];
+                for (let j = 0; j < row.length; j++) {
+                    const frame = row[j];
+                    frame.draw();
+                }
+            }
+            ;
+        }
 
     </script>
 </body>
