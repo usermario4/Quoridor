@@ -11,25 +11,39 @@
 
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    
     <script src="script.js"></script>
+    <script src="circlemove.js"></script>
     <label for="player1">Player 1:</label>
     <input type="text" id="player1" name="player1"><br>
     <label for="player2">Player 2:</label>
     <input type="text" id="player2" name="player2"><br>
     <button type="button" class="my-btn" onclick="startGame()">PLAY!</button>
     <div id="countdown"></div>
+    <button class="wallbutton" onclick="setWallType('horizontal')">Place Horizontal Wall</button>
+    <button class="wallbutton2"onclick="setWallType('vertical')">Place Vertical Wall</button>
+    
+    
 
-
+    <script>
+        function startGame() {
+          var player1 = document.getElementById("player1").value;
+          var player2 = document.getElementById("player2").value;
+      
+          // Update the innerHTML of the PLAY! button with the retrieved values
+          document.querySelector(".my-btn").innerHTML = "PLAY! (" + player1 + " vs " + player2 + ")";
+        }
+        
+        function setWallType(wallType) {
+          // Code for setting wall type
+        }
+      </script>
 
 
     <style>
         .my-btn {
             background-color: rgb(62, 137, 0);
-
-
-
             font-family: 'Trebuchet MS', sans-serif;
-
             color: white;
             border: none;
             border-radius: 20px;
@@ -39,8 +53,6 @@
             position: relative;
             margin-top: 300px;
             margin-left: 20px;
-
-
         }
 
         .my-btn:hover {
@@ -54,13 +66,31 @@
             margin-top: 50px;
             margin-left: 10px;
         }
+        .wallbutton {
+    background-color: rgb(215, 140, 0);
+    font-family: 'Trebuchet MS', sans-serif;
+    border-radius: 20px;
+    padding: 5px 15px;
+    min-height: 50px;
+    min-width: 120px;
+    position: absolute;
+    top: 100px;
+    left: 20px;
+}
+
+.wallbutton2 {
+    background-color: rgb(215, 140, 0);
+    font-family: 'Trebuchet MS', sans-serif;
+    border-radius: 20px;
+    padding: 5px 15px;
+    min-height: 50px;
+    min-width: 160px;
+    position: absolute;
+    top: 200px;
+    left: 20px;
+}
     </style>
 
-    <script>
-
-
-
-    </script>
 </body>
 
 </html>
