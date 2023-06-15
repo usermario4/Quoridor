@@ -2,9 +2,6 @@ let player1Name;
 let player2Name;
 let countdown;
 let timer;
-let selectedWallType = null; // Track the selected wall type ('horizontal' or 'vertical')
-let selectedWallX = null; // Track the selected wall X position
-let selectedWallY = null; // Track the selected wall Y position
 
 class TheSquare {
   constructor(x, y, color) {
@@ -151,39 +148,36 @@ function draw() {
   }
   drawCircle(circle1X, circle1Y, "#AFEEEE");
   drawCircle(circle2X, circle2Y, "#F70D1A");
-  
-  // Draw the selected wall
-  if (selectedWallType && selectedWallX !== null && selectedWallY !== null) {
-    if (selectedWallType === 'horizontal') {
-      fill("#827839");
-      rect(matrix[selectedWallY][selectedWallX].x, matrix[selectedWallY][selectedWallX].y + 50, 130, 10);
-    } else if (selectedWallType === 'vertical') {
-      fill("#827839");
-      rect(matrix[selectedWallY][selectedWallX].x + 60, matrix[selectedWallY][selectedWallX].y, 10, 110);
-    }
-  }
 }
 
 function handleMouseClick() {
   const mouseXPos = mouseX;
   const mouseYPos = mouseY;
 
-  // Check if the click is within the matrix area
-  if (
-    mouseXPos >= 250 && // Check if click is to the right of the left margin
-    mouseXPos <= 910 && // Check if click is to the left of the right margin
-    mouseYPos >= 125 && // Check if click is below the top margin
-    mouseYPos <= 675 // Check if click is above the bottom margin
-  ) {
-    const squareX = Math.floor((mouseXPos - 250) / 70); // Calculate the square X position
-    const squareY = Math.floor((mouseYPos - 125) / 60); // Calculate the square Y position
-    
-    // Update the selected wall coordinates
-    selectedWallX = squareX;
-    selectedWallY = squareY;
+  for (let i = 0; i < matrix.length; i++) {
+    const row = matrix[i];
+    for (let j = 0; j < row.length; j++) {
+      const square = row[j];
+      
+      // Check if the click is within the horizontal wall area of the square
+      if (
+        mouseXPos >= square.x + 60 && // Check if click is to the right of the square
+        mouseXPos <= square.x + 60 + 5 && // Check if click is within the wall width
+        mouseYPos >= square.y && // Check if click is within the square's height
+        mouseYPos <= square.y + 50
+      ) {
+        square.setHorizontalWall(!square.horizontalWall); // Toggle the horizontal wall
+      }
+      
+      // Check if the click is within the vertical wall area of the square
+      if (
+        mouseXPos >= square.x && // Check if click is within the square's width
+        mouseXPos <= square.x + 60 &&
+        mouseYPos >= square.y + 50 && // Check if click is below the square
+        mouseYPos <= square.y + 50 + 5 // Check if click is within the wall height
+      ) {
+        square.setVerticalWall(!square.verticalWall); // Toggle the vertical wall
+      }
+    }
   }
-}
-
-function setWallType(wallType) {
-  selectedWallType = wallType;
 }
